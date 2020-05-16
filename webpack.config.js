@@ -1,9 +1,8 @@
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-
 module.exports = {
   mode: 'development',
-  
+
   entry: ['./src/index.tsx'],
   
   devServer: {
@@ -20,6 +19,26 @@ module.exports = {
         test: /\.tsx?$/,
         use: ['babel-loader', 'ts-loader'],
       },
+      {
+        test: /\.(scss|sass|css)$/,
+        exclude: /node_modules/,
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              modules: {
+                auto: /\.module\.\w+$/i,
+                mode: 'local',
+                exportGlobals: true,
+                localIdentName: '[local]-[hash:base64:5]', // 
+                hashPrefix: 'my-custom-hash',
+              },
+            },
+          },
+          'sass-loader',
+        ],
+      },
     ],
   },
 
@@ -27,11 +46,10 @@ module.exports = {
     alias: {
       'react-dom': '@hot-loader/react-dom',
     },
-    extensions: ['.js', 'jsx', '.ts', '.tsx'],
+    extensions: ['.scss', '.js', 'jsx', '.ts', '.tsx'],
   },
 
   plugins: [
-    new webpack.HotModuleReplacementPlugin(),
     new HtmlWebpackPlugin({
       template: 'public/index.html',
     }),

@@ -23,5 +23,9 @@
     "node_modules",
     "dist",
     "public"
-  ]
+  ],
+  "include": [
+    "src/index.d.ts",
+    "src/**/*"
+  ],
 }
