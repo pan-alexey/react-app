@@ -2,7 +2,7 @@
 {
   "compilerOptions": {
     /* Basic Options */
-    "target": "esnext",
+    "target": "es5",
     "module": "esnext",
     "jsx": "preserve",
       

@@ -9,7 +9,7 @@ module.exports = {
   },
   externals: {
     'react': 'React'
-},
+  },
   module: {
     rules: [
       {

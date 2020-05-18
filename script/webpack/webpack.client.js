@@ -1,18 +1,15 @@
+const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+const __ROOT_PATH__ = process.cwd();
+const __CLIENT_PATH__ = path.join(__ROOT_PATH__, '.cache', 'client');
+
 module.exports = {
   mode: 'development',
-
-  entry: ['./src/index.tsx'],
-  
-  devServer: {
-    historyApiFallback: true,
-    inline: true,
-    port: 3000,
-    hot: true,
-    publicPath: '/',
+  output: {
+    filename: 'index.js',
   },
-
   module: {
     rules: [
       {
@@ -50,8 +47,8 @@ module.exports = {
   },
 
   plugins: [
-    new HtmlWebpackPlugin({
-      template: 'public/index.html',
+    new webpack.EnvironmentPlugin({
+      NODE_ENV: 'development',
     }),
   ],
 }
