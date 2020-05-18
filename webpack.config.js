@@ -1,18 +1,30 @@
+const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+const __ROOT_PATH__ = process.cwd();
+const __CLIENT_PATH__ = path.join(__ROOT_PATH__, '.cache', 'client');
+
 module.exports = {
   mode: 'development',
 
   entry: ['./src/index.tsx'],
-  
+  // output: {
+  //   path: __CLIENT_PATH__
+  // },
   devServer: {
-    historyApiFallback: true,
-    inline: true,
+    contentBase: __CLIENT_PATH__,
     port: 3000,
     hot: true,
-    publicPath: '/',
+    historyApiFallback: true,
+    disableHostCheck: true,
+    inline: true,
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
+      "Access-Control-Allow-Headers": "X-Requested-With, content-type, Authorization"
+    }
   },
-
   module: {
     rules: [
       {

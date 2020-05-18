@@ -3,11 +3,28 @@ import React, { Component } from 'react';
 import Components from './components/Components';
 import './sass/main.scss';
 
+
+const Comp: {
+    foo: React.ElementType
+} = {
+    foo: Components,
+};
+
+
+const block = (prop: any) => {
+    // component does exist
+    return React.createElement(Comp['foo'], {...prop});
+}
+
 class App extends Component {
+
+    TagName = 'Components';
+
     render() {
         return (
             <div className="app">
-              <Components />
+              {block('foo')}
+              {block('foo')}
               <input ></input>
             </div>
         );
