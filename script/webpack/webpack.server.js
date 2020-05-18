@@ -4,6 +4,7 @@ module.exports = {
   target: 'node',
   node: false,
   output: {
+    libraryTarget: 'umd',
     filename: 'index.js',
   },
   externals: {

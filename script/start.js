@@ -21,6 +21,18 @@ webpackConfig['server'].mode = 'development';
 const webpackComplier = {};
 webpackComplier['server'] = webpack(webpackConfig['server']);
 
+
+function requireUncached(module) {
+  delete require.cache[require.resolve(module)];
+  return require(module);
+}
+
+
+const express = require("express");
+const port = 4000;
+const app = express();
+let server;
+
 (async function () {
   let spawn;
   webpackComplier['server']
@@ -42,17 +54,21 @@ webpackComplier['server'] = webpack(webpackConfig['server']);
       entrypoints: false
     }))
 
-    if (spawn) { spawn.kill();}
+    if (!server) {
+      server = path.resolve(__SERVER_PATH__, 'index.js');
+      app.use((req, res, next) => {
+        const use = require(server).default;
+        use(req, res, next);
+      });
 
-    spawn = child_process.spawn('node', [require.resolve(__SERVER_PATH__, 'index.js')]);
+      app.listen(port, err => {
+        if (err) throw err;
+        console.log(`> Ready on http://localhost:${port}`);
+      });
+    }else {
+      requireUncached(server);
+    }
 
-    spawn.stdout.on('data', function(data){
-      console.log(String(data));
-    });
-    
-    spawn.stderr.on('data', function(data){
-      console.log(String(data));
-    });
   });
 })()
 
