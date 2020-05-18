@@ -22,15 +22,14 @@ module.exports = {
         test: /\.(scss|sass|css)$/,
         exclude: /node_modules/,
         use: [
-          'style-loader',
-          // 'css/locals?module&localIdentName=[name]__[local]___[hash:base64:5]',
           {
             loader: 'css-loader',
             options: {
+              onlyLocals: true,
               modules: {
                 auto: /\.module\.\w+$/i,
                 mode: 'local',
-                // exportGlobals: true,
+                exportGlobals: true,
                 localIdentName: '[local]-[hash:base64:5]', // 
                 hashPrefix: 'my-custom-hash',
               },
@@ -39,10 +38,6 @@ module.exports = {
           'sass-loader',
         ],
       },
-
-
-
-
     ],
   },
 
