@@ -8,11 +8,12 @@ const __SERVER_PATH__ = path.join(__ROOT_PATH__, '.cache',);
 const __CLIENT_PATH__ = path.join(__ROOT_PATH__, '.cache', 'client');
 
 const webpackConfig = {}
+
 webpackConfig['server'] = require('./webpack/webpack.server');
 webpackConfig['server'].entry = path.join(__ROOT_PATH__, './server/server.tsx');
 webpackConfig['server'].output.path = __SERVER_PATH__;
 webpackConfig['server'].mode = 'development';
-//-----------------//
+
 webpackConfig['client'] = require('./webpack/webpack.client');
 webpackConfig['client'].entry = path.join(__ROOT_PATH__, './src/index.tsx');
 webpackConfig['client'].output.path = __CLIENT_PATH__;
@@ -32,8 +33,10 @@ const serverEntry = path.resolve(__SERVER_PATH__, 'index.js');
     aggregateTimeout: 300,
     poll: undefined
   }, (err, stats) => { 
-    requireUncached(serverEntry);
-  
+    if (!(err || stats.hasErrors())) {
+      requireUncached(serverEntry);
+    }
+
     process.stdout.write(process.platform === 'win32' ? '\x1B[2J\x1B[0f' : '\x1B[2J\x1B[3J\x1B[H');
     console.log(stats.toString({
       assets: false,

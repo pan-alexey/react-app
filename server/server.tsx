@@ -1,16 +1,15 @@
 import express from 'express';
 import React from 'react';
-import { renderToString } from 'react-dom/server';
-
+import { renderToString, renderToNodeStream } from 'react-dom/server';
 import App from '../src/App';
 
 const app = express.Router();
 
-let couner = 0;
+app.use('*', (req, res, next) => {
+  next();
+});
 
 app.get('*', (req, res) => {
-  console.warn(couner++);
-
   res.write('<!DOCTYPE html><html lang="en">');
   res.write(
   `<head>
@@ -23,13 +22,19 @@ app.get('*', (req, res) => {
     <title>Hello World!</title>
   </head>`);
   res.write('<body>');
-  const html = renderToString(<App />);
-  res.write(`<div id="root">${html}</div>`);
-  res.write('<div>123</div>');
-  res.write('</body>');
-  res.write('<script src="/index.js"></script>');
-  res.write('</html>');
-  res.end();
+  res.write(`<div id="root">`);
+
+  renderToNodeStream(<App />).on('data', (chunk) => { 
+    const data = chunk.toString();
+    res.write(data);
+  }).on('end', () => {
+    res.write(`</div>`);
+    res.write('</body>');
+    res.write('<script src="/index.js"></script>');
+    res.write('</html>');
+    res.end();
+  });
 })
+
 
 export default app;
