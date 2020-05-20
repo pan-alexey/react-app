@@ -7,7 +7,7 @@ const str: string = ` 2020-05-18T21:08:43.306Z `;
 class Components extends Component {
     render() {
       const ceil = []
-      for (var i = 0; i < 100; i++) {
+      for (var i = 0; i < 20; i++) {
         ceil.push(<span className={styles.span} key={i}>{i}</span>);
       } 
 

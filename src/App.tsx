@@ -16,7 +16,7 @@ const block = (prop: any) => {
 class App extends Component {
     render() {
         var rows = [];
-        for (var i = 0; i < 1000; i++) {
+        for (var i = 0; i < 10; i++) {
             rows.push(<MockComponent key={i} />);
         } 
         return (

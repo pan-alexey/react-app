@@ -1,9 +1,26 @@
 const path = require('path');
 const webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
+const production = false;
 const __ROOT_PATH__ = process.cwd();
 const __CLIENT_PATH__ = path.join(__ROOT_PATH__, '.cache', 'client');
+
+const plugins = []
+
+if (!production) {
+  plugins.push(new webpack.EnvironmentPlugin({
+    NODE_ENV: 'development',
+  }))
+} else {
+  plugin.push(new MiniCssExtractPlugin({
+      // Options similar to the same options in webpackOptions.output
+      // all options are optional
+      filename: '[name].css',
+      chunkFilename: '[id].css',
+      ignoreOrder: false, // Enable to remove warnings about conflicting order
+  }))
+}
 
 module.exports = {
   mode: 'development',
@@ -22,7 +39,7 @@ module.exports = {
         use: [
           'style-loader',
           {
-            loader: 'css-loader',
+            loader: production ? MiniCssExtractPlugin.loader : 'css-loader',
             options: {
               modules: {
                 auto: /\.module\.\w+$/i,
@@ -45,10 +62,5 @@ module.exports = {
     },
     extensions: ['.scss', '.js', 'jsx', '.ts', '.tsx'],
   },
-
-  plugins: [
-    new webpack.EnvironmentPlugin({
-      NODE_ENV: 'development',
-    }),
-  ],
+  plugins
 }
