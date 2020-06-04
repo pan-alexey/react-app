@@ -6,9 +6,14 @@ const date = new Date();
 const str: string = ` 2020-05-18T21:08:43.306Z `;
 class Components extends Component {
     render() {
+      const ceil = []
+      for (var i = 0; i < 20; i++) {
+        ceil.push(<span className={styles.span} key={i}>{i}</span>);
+      } 
+
         return (
-            <div className={styles.app}>
-              <input></input>
+            <div className={styles.div}>
+              {ceil}
             </div>
         );
     }

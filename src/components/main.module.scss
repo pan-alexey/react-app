@@ -1,9 +1,15 @@
+
 .app {
-  background: black;
+  background:white;
   /* ... */
 }
 
-.app {
-  background:black;
-  /* ... */
+.div {
+  background:white;
+  border: 1px solid black;
+}
+
+.span {
+  background:white;
+  border: 1px solid #ccc;
 }

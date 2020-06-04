@@ -2,7 +2,7 @@
 {
   "compilerOptions": {
     /* Basic Options */
-    "target": "esnext",
+    "target": "es5",
     "module": "esnext",
     "jsx": "preserve",
       
@@ -26,6 +26,7 @@
   ],
   "include": [
     "src/index.d.ts",
-    "src/**/*"
+    "src/**/*",
+    "server/**/*"
   ],
 }
