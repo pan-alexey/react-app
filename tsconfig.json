@@ -1,21 +1,26 @@
-
 {
   "compilerOptions": {
     /* Basic Options */
     "target": "es5",
     "module": "esnext",
-    "jsx": "preserve",
-      
+    "jsx": "react",
     /* Strict Type-Checking Options */
     "strict": true,
     "noImplicitAny": true,
     "strictNullChecks": true,
     "noImplicitThis": false,
-      
     /* Module Resolution Options */
     "moduleResolution": "node",
     "baseUrl": "./",
     "esModuleInterop": true,
+    "paths": {
+      "~src/*": [
+        "src/*"
+      ],
+      "~server/*": [
+        "server/*"
+      ]
+    },
   },
   "exclude": [
     "**/*.test.*",
@@ -25,8 +30,10 @@
     "public"
   ],
   "include": [
-    "src/index.d.ts",
     "src/**/*",
     "server/**/*"
   ],
+  "files": [
+    "index.d.ts"
+  ]
 }

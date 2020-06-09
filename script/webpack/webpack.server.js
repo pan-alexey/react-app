@@ -1,49 +1,70 @@
-const nodeExternals = require('webpack-node-externals');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+'use strict';
 
-module.exports = {
+const paths = require('../utils/paths');
+const webpack = require('webpack');
+const nodeExternals = require('webpack-node-externals');
+const cssLoader = require('./helpers/cssLoader');
+
+const webpackConfig = {
+  mode: "development",
   target: 'node',
-  node: false,
+  externals: [
+    nodeExternals()
+  ],
+  entry: [
+    paths.resolve('./server/app.tsx')
+  ],
+  resolve: {
+    alias: {
+      '~src': paths.src,
+      '~server': paths.server
+    },
+    extensions: ['.scss', '.js', 'jsx', '.ts', '.tsx'],
+  },
   output: {
     libraryTarget: 'umd',
-    filename: 'index.js',
+    path: paths.build,
+    filename: 'server.js'
   },
-  externals: {
-    'react': 'React'
+  plugins: [],
+  optimization: {
+    splitChunks: {
+    },
   },
   module: {
     rules: [
       {
+        enforce: 'pre',
         test: /\.tsx?$/,
-        use: ['babel-loader', 'ts-loader'],
         exclude: /node_modules/,
+        loader: 'eslint-loader',
       },
-
+      {
+        test: /\.tsx?$/,
+        use: ['babel-loader',
+          { loader: 'ts-loader', options: { onlyCompileBundledFiles: true } }
+        ],
+      },
       {
         test: /\.(scss|sass|css)$/,
         exclude: /node_modules/,
         use: [
-          {
-            loader: 'css-loader',
-            options: {
-              onlyLocals: true,
-              modules: {
-                auto: /\.module\.\w+$/i,
-                mode: 'local',
-                exportGlobals: true,
-                localIdentName: '[local]-[hash:base64:5]', // 
-                hashPrefix: 'my-custom-hash',
-              },
-            },
-          },
+          cssLoader(true),
           'sass-loader',
         ],
       },
+      {
+        test: /\.(ttf|eot|otf|svg|png)$/,
+        loader: 'file-loader'
+      },
+      {
+        test: /\.(woff|woff2)$/,
+        loader: 'url-loader'
+      }
     ],
   },
+};
 
-  resolve: {
-    extensions: ['.js', '.jsx', '.ts', '.tsx'],
-  },
-  externals: [nodeExternals()],
+module.exports = (config) => {
+  return webpack(Object.assign(webpackConfig, config || {}));
 };
