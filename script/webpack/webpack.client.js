@@ -1,66 +1,69 @@
-const path = require('path');
+'use strict';
+
+const paths = require('../utils/paths');
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const nodeExternals = require('webpack-node-externals');
+const cssLoader = require('./helpers/cssLoader');
 
-const production = false;
-const __ROOT_PATH__ = process.cwd();
-const __CLIENT_PATH__ = path.join(__ROOT_PATH__, '.cache', 'client');
+const isProduction = process.env.NODE_ENV === 'production';
 
-const plugins = []
-
-if (!production) {
-  plugins.push(new webpack.EnvironmentPlugin({
-    NODE_ENV: 'development',
-  }))
-} else {
-  plugin.push(new MiniCssExtractPlugin({
-      // Options similar to the same options in webpackOptions.output
-      // all options are optional
-      filename: '[name].css',
-      chunkFilename: '[id].css',
-      ignoreOrder: false, // Enable to remove warnings about conflicting order
-  }))
-}
-
-module.exports = {
-  mode: 'development',
-  output: {
-    filename: 'index.js',
+const webpackConfig = {
+  mode: isProduction ? 'production' : 'development',
+  entry: [
+    paths.resolve('./src/index.tsx')
+  ],
+  resolve: {
+    alias: {
+      'react-dom': '@hot-loader/react-dom',
+      '~src': paths.src,
+      '~server': paths.server
+    },
+    extensions: ['.scss', '.js', 'jsx', '.ts', '.tsx'],
   },
+  output: !isProduction ? { filename: 'index.js' } : {
+    path: paths.dist,
+    // publicPath
+    filename: 'index.js',
+    chunkFilename: 'js/[name].[contenthash:8].js',
+  },
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: '[name].css',
+    })
+  ],
   module: {
     rules: [
       {
+        enforce: 'pre',
         test: /\.tsx?$/,
-        use: ['babel-loader', 'ts-loader'],
+        exclude: /node_modules/,
+        loader: 'eslint-loader',
+      },
+      {
+        test: /\.tsx?$/,
+        use: ['babel-loader',
+          { loader: 'ts-loader', options: { onlyCompileBundledFiles: true } }
+        ],
       },
       {
         test: /\.(scss|sass|css)$/,
         exclude: /node_modules/,
         use: [
-          'style-loader',
           {
-            loader: production ? MiniCssExtractPlugin.loader : 'css-loader',
+            loader: MiniCssExtractPlugin.loader,
             options: {
-              modules: {
-                auto: /\.module\.\w+$/i,
-                mode: 'local',
-                exportGlobals: true,
-                localIdentName: '[local]-[hash:base64:5]', // 
-                hashPrefix: 'my-custom-hash',
-              },
+              hmr: true
             },
           },
+          cssLoader(false),
           'sass-loader',
         ],
       },
     ],
   },
+};
 
-  resolve: {
-    alias: {
-      'react-dom': '@hot-loader/react-dom',
-    },
-    extensions: ['.scss', '.js', 'jsx', '.ts', '.tsx'],
-  },
-  plugins
-}
+module.exports = module.exports = (config) => {
+  return webpack(Object.assign(webpackConfig, config || {}));
+};

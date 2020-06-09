@@ -1,33 +1,11 @@
 import { hot } from 'react-hot-loader/root';
 import React, { Component } from 'react';
-import Components from './components/Components';
-import MockComponent from './components/MockComponent';
-import './sass/main.scss';
-
-
-const Comp: {[key: string]: React.ElementType} = {
-    _component: Components,
-};
-
-const block = (prop: any) => {
-    return React.createElement(Comp['_component'], {...prop});
-}
+import Components from '~src/components/Components';
 
 class App extends Component {
-    render() {
-        var rows = [];
-        for (var i = 0; i < 10; i++) {
-            rows.push(<MockComponent key={i} />);
-        } 
-        return (
-            <div className="app">
-                {block('foo')}
-                {block('foo')}
-                <input ></input>
-                {rows}
-            </div>
-        );
-    }
+  render() {
+    return <Components />;
+  }
 }
 
 export default hot(App);
