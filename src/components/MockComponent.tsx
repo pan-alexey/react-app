@@ -9,7 +9,6 @@ class Components extends Component {
     for (let i = 0; i < 100; i++) {
       ceil.push(
         <span
-          className={styles.span}
           key={i}
           onClick={function () {
             alert('клик');

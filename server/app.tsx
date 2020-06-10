@@ -1,5 +1,7 @@
 import express from 'express';
 import React from 'react';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
 import { renderToNodeStream } from 'react-dom/server';
 import App from '../src/App';
 const app = express.Router();
