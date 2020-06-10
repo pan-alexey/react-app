@@ -3,6 +3,7 @@
 const paths = require('../utils/paths');
 const webpack = require('webpack');
 const nodeExternals = require('webpack-node-externals');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const cssLoader = require('./helpers/cssLoader');
 
 const webpackConfig = {
@@ -22,7 +23,12 @@ const webpackConfig = {
     path: paths.build,
     filename: 'server.js',
   },
-  plugins: [],
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: '[name].css',
+      chunkFilename: '[id].css',
+    }),
+  ],
   optimization: {
     splitChunks: {},
   },

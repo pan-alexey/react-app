@@ -3,7 +3,6 @@
 const paths = require('../utils/paths');
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const nodeExternals = require('webpack-node-externals');
 const cssLoader = require('./helpers/cssLoader');
 
 const isProduction = process.env.NODE_ENV === 'production';
@@ -19,17 +18,15 @@ const webpackConfig = {
     },
     extensions: ['.scss', '.js', 'jsx', '.ts', '.tsx'],
   },
-  output: !isProduction
-    ? { filename: 'index.js' }
-    : {
-        path: paths.dist,
-        // publicPath
-        filename: 'index.js',
-        chunkFilename: 'js/[name].[contenthash:8].js',
-      },
+  output: {
+    path: paths.dist,
+    filename: 'index.js',
+    chunkFilename: 'js/[name].[contenthash:8].js',
+  },
   plugins: [
     new MiniCssExtractPlugin({
       filename: '[name].css',
+      chunkFilename: '[id].css',
     }),
   ],
   module: {
