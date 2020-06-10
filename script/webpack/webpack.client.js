@@ -10,27 +10,27 @@ const isProduction = process.env.NODE_ENV === 'production';
 
 const webpackConfig = {
   mode: isProduction ? 'production' : 'development',
-  entry: [
-    paths.resolve('./src/index.tsx')
-  ],
+  entry: [paths.resolve('./src/index.tsx')],
   resolve: {
     alias: {
       'react-dom': '@hot-loader/react-dom',
       '~src': paths.src,
-      '~server': paths.server
+      '~server': paths.server,
     },
     extensions: ['.scss', '.js', 'jsx', '.ts', '.tsx'],
   },
-  output: !isProduction ? { filename: 'index.js' } : {
-    path: paths.dist,
-    // publicPath
-    filename: 'index.js',
-    chunkFilename: 'js/[name].[contenthash:8].js',
-  },
+  output: !isProduction
+    ? { filename: 'index.js' }
+    : {
+        path: paths.dist,
+        // publicPath
+        filename: 'index.js',
+        chunkFilename: 'js/[name].[contenthash:8].js',
+      },
   plugins: [
     new MiniCssExtractPlugin({
       filename: '[name].css',
-    })
+    }),
   ],
   module: {
     rules: [
@@ -42,9 +42,7 @@ const webpackConfig = {
       },
       {
         test: /\.tsx?$/,
-        use: ['babel-loader',
-          { loader: 'ts-loader', options: { onlyCompileBundledFiles: true } }
-        ],
+        use: ['babel-loader', { loader: 'ts-loader', options: { onlyCompileBundledFiles: true } }],
       },
       {
         test: /\.(scss|sass|css)$/,
@@ -53,7 +51,7 @@ const webpackConfig = {
           {
             loader: MiniCssExtractPlugin.loader,
             options: {
-              hmr: true
+              hmr: true,
             },
           },
           cssLoader(false),

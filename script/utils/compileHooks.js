@@ -4,7 +4,7 @@ const outputMessage = require('./compileConsole');
 
 class compileHooks {
   ready = false;
-  compillers = {}
+  compillers = {};
   serverPort = null;
 
   console() {
@@ -12,10 +12,10 @@ class compileHooks {
       compillers: this.compillers,
       ready: this.ready,
       serverPort: this.serverPort,
-    })
+    });
   }
 
-  compileBegin(name){
+  compileBegin(name) {
     this.compillers[name] = false;
     this.console();
   }
@@ -24,16 +24,15 @@ class compileHooks {
     for (const key in this.compillers) {
       const compiller = this.compillers[key];
 
-      if (!compiller || compiller.hasErrors()){
+      if (!compiller || compiller.hasErrors()) {
         return false;
       }
     }
-    return true
+    return true;
   }
 
-  compileEnd(name, stats){
+  compileEnd(name, stats) {
     this.compillers[name] = stats;
-
 
     if (!this.ready && this.checkCompillersStats() && this.serverPort) {
       this.ready = true;
@@ -44,10 +43,10 @@ class compileHooks {
   }
 
   regiserPort(port) {
-    this.serverPort = parseInt(port, 10)
+    this.serverPort = parseInt(port, 10);
   }
 
-  regiserCompiller(name, compiler){
+  regiserCompiller(name, compiler) {
     this.compileBegin(name);
 
     compiler.hooks.invalid.tap('invalid', () => {
@@ -55,7 +54,7 @@ class compileHooks {
     });
 
     compiler.hooks.done.tap('done', (stats) => {
-      this.compileEnd(name, stats)
+      this.compileEnd(name, stats);
     });
   }
 }

@@ -12,9 +12,9 @@ const cssLoaders = (isServer) => {
         exportGlobals: true,
         localIdentName: isProduction ? '[hash:base64:6]' : '[local]__[hash:base64:6]',
         hashPrefix: 'react',
-      }
-    }
-  }
+      },
+    },
+  };
 };
 
-module.exports = cssLoaders
+module.exports = cssLoaders;
