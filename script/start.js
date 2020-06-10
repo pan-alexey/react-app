@@ -2,7 +2,6 @@
 
 const path = require('path');
 const WebpackDevServer = require('webpack-dev-server');
-const webpack = require('webpack');
 const paths = require('./utils/paths');
 const requireUncached = require('./utils/requireUncached');
 
