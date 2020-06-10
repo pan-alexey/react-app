@@ -11,5 +11,9 @@
 1. ```npm install```
 2. ```npm run start```
 
-#### Run eslint with fix
-```npm lint```
+#### Run lint
+1. ```npm run lint``` - only lint
+2. ```npm run lint:fix``` - only lint width fix
+
+#### JEST unit tests
+```npm run test```
