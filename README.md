@@ -13,7 +13,7 @@
 
 #### Run lint
 1. ```npm run lint``` - only lint
-2. ```npm run lint:fix``` - only lint width fix
+2. ```npm run lint:fix``` - lint & fix
 
 #### JEST unit tests
 ```npm run test```
