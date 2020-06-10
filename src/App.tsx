@@ -4,7 +4,12 @@ import Components from '~src/components/Components';
 
 class App extends Component {
   render() {
-    return <Components />;
+    return (
+      <div>
+        React
+        <Components />
+      </div>
+    );
   }
 }
 
