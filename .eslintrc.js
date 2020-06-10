@@ -59,6 +59,7 @@ module.exports = {
     ],
     'no-useless-constructor': 'off',
     '@typescript-eslint/no-useless-constructor': 'warn',
-    ' @typescript-eslint/explicit-module-boundary-types': 'off',
+    '@typescript-eslint/explicit-module-boundary-types': 'off',
+    '@typescript-eslint/no-var-requires': 'off',
   },
 };
