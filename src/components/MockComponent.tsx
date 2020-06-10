@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import React, { Component } from 'react';
 
-import styles from './main.module.scss';
+import styles from '~src/sass/main.module.scss';
 
 class Components extends Component {
   render() {

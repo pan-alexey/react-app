@@ -3,33 +3,34 @@
 const paths = require('../utils/paths');
 const webpack = require('webpack');
 const nodeExternals = require('webpack-node-externals');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const cssLoader = require('./helpers/cssLoader');
 
 const webpackConfig = {
-  mode: "development",
+  mode: 'development',
   target: 'node',
-  externals: [
-    nodeExternals()
-  ],
-  entry: [
-    paths.resolve('./server/app.tsx')
-  ],
+  externals: [nodeExternals()],
+  entry: [paths.resolve('./server/app.tsx')],
   resolve: {
     alias: {
       '~src': paths.src,
-      '~server': paths.server
+      '~server': paths.server,
     },
     extensions: ['.scss', '.js', 'jsx', '.ts', '.tsx'],
   },
   output: {
     libraryTarget: 'umd',
     path: paths.build,
-    filename: 'server.js'
+    filename: 'server.js',
   },
-  plugins: [],
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: '[name].css',
+      chunkFilename: '[id].css',
+    }),
+  ],
   optimization: {
-    splitChunks: {
-    },
+    splitChunks: {},
   },
   module: {
     rules: [
@@ -41,26 +42,21 @@ const webpackConfig = {
       },
       {
         test: /\.tsx?$/,
-        use: ['babel-loader',
-          { loader: 'ts-loader', options: { onlyCompileBundledFiles: true } }
-        ],
+        use: ['babel-loader', { loader: 'ts-loader', options: { onlyCompileBundledFiles: true } }],
       },
       {
         test: /\.(scss|sass|css)$/,
         exclude: /node_modules/,
-        use: [
-          cssLoader(true),
-          'sass-loader',
-        ],
+        use: [cssLoader(true), 'sass-loader'],
       },
       {
         test: /\.(ttf|eot|otf|svg|png)$/,
-        loader: 'file-loader'
+        loader: 'file-loader',
       },
       {
         test: /\.(woff|woff2)$/,
-        loader: 'url-loader'
-      }
+        loader: 'url-loader',
+      },
     ],
   },
 };

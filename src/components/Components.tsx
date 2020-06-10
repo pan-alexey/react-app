@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import React, { Component } from 'react';
 import MockComponent from './MockComponent';
-import styles from './main.module.scss';
+import styles from '~src/sass/main.module.scss';
 //import { createStore } from 'redux';
 
 class Components extends Component {
@@ -34,7 +34,6 @@ class Components extends Component {
         <button onClick={this.increment}>Increment</button>
         <button onClick={this.decrement}>Decrement</button>
         <input value={this.state.count} onChange={this.handleChange}></input>
-        <MockComponent />
         <MockComponent />
       </div>
     );
