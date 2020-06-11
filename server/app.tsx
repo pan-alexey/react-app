@@ -5,7 +5,9 @@ import { renderToNodeStream } from 'react-dom/server';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import reducer from '../src/store';
-const store = createStore(reducer);
+const store = createStore(reducer, {
+  str: 'server',
+});
 
 import App from '../src/App';
 const app = express.Router();

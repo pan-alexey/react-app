@@ -21,11 +21,7 @@ interface stateType {
   str: string;
 }
 
-const defaultState = {
-  str: 'test',
-};
-
-const reducer = (state = defaultState, action: actionType): stateType => {
+const reducer = (state: stateType = { str: '' }, action: actionType): stateType => {
   switch (action.type) {
     case Action.action1:
       return {

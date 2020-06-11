@@ -9,20 +9,14 @@ import { Provider } from 'react-redux';
 import App from './App';
 import reducer from './store';
 
-// declare const window: {
-//   __PRELOADED_STATE__: unknown;
-// };
-// window.__PRELOADED_STATE__ = '';
-// const __PRELOADED_STATE__ = window.__PRELOADED_STATE__;
-// delete window.__PRELOADED_STATE__;
+declare const window: {
+  __PRELOADED_STATE__: unknown;
+};
+window.__PRELOADED_STATE__ = { str: 'client1' };
+const __PRELOADED_STATE__ = window.__PRELOADED_STATE__;
+delete window.__PRELOADED_STATE__;
 
-// const reducer = (state = initialState, action: Action) => {
-//   return state;
-// };
-
-// // Инициализация хранилища
-
-const store = createStore(reducer);
+const store = createStore(reducer, { str: 'client' });
 
 const rootElement = document.getElementById('root');
 

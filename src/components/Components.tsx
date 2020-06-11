@@ -34,6 +34,7 @@ class Components extends Component {
     return (
       <div className={styles.app}>
         <h1>{this.state.count}</h1>
+        <h1>{JSON.stringify(this.props)}</h1>
         <button onClick={this.increment}>Increment</button>
         <button onClick={this.decrement}>Decrement</button>
         <input value={this.state.count} onChange={this.handleChange}></input>
