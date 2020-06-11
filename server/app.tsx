@@ -1,8 +1,12 @@
 import express from 'express';
 import React from 'react';
+import { renderToNodeStream } from 'react-dom/server';
+
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
-import { renderToNodeStream } from 'react-dom/server';
+import reducer from '../src/store';
+const store = createStore(reducer);
+
 import App from '../src/App';
 const app = express.Router();
 
@@ -29,7 +33,11 @@ app.get('*', (req, res) => {
   res.write('<body>');
   res.write(`<div id="root">`);
 
-  renderToNodeStream(<App />)
+  renderToNodeStream(
+    <Provider store={store} key="provider">
+      <App />
+    </Provider>,
+  )
     .on('data', (chunk) => {
       const data = chunk.toString();
       res.write(data);

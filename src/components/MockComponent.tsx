@@ -1,12 +1,13 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import styles from '~src/sass/main.module.scss';
 
 class Components extends Component {
   render() {
     const ceil = [];
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < 10; i++) {
       ceil.push(
         <span
           key={i}
@@ -19,7 +20,11 @@ class Components extends Component {
       );
     }
 
-    return <div className={styles.div}>{ceil}</div>;
+    return (
+      <div>
+        <div className={styles.div}>{ceil}</div>
+      </div>
+    );
   }
 }
 

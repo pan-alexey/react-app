@@ -1,8 +1,10 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import React, { Component } from 'react';
 import MockComponent from './MockComponent';
 import styles from '~src/sass/main.module.scss';
 //import { createStore } from 'redux';
+import { connect } from 'react-redux';
 
 class Components extends Component {
   state = {
@@ -28,6 +30,7 @@ class Components extends Component {
   };
 
   render() {
+    console.log(this.props);
     return (
       <div className={styles.app}>
         <h1>{this.state.count}</h1>
@@ -40,4 +43,9 @@ class Components extends Component {
   }
 }
 
-export default Components;
+export default connect(
+  (state) => ({
+    reduxStore: state,
+  }),
+  (dispatch) => ({}),
+)(Components);
