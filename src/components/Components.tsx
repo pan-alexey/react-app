@@ -4,13 +4,16 @@
 import React, { Component, Suspense } from 'react';
 import styles from '~src/sass/main.module.scss';
 import { connect } from 'react-redux';
-const MockComponent = React.lazy(() => import('./MockComponent'));
+
 class Components extends Component<unknown> {
+  MockComponent: any = null;
+
   state = {
     canRender: false,
   };
 
   componentDidMount() {
+    this.MockComponent = React.lazy(() => import('./MockComponent'));
     this.setState({ canRender: true });
   }
 
@@ -19,10 +22,10 @@ class Components extends Component<unknown> {
     return canRender ? (
       <div className={styles.app}>
         <Suspense fallback={<div>Загрузка...</div>}>
-          <MockComponent />
-          <MockComponent />
-          <MockComponent />
-          <MockComponent />
+          <this.MockComponent />
+          <this.MockComponent />
+          <this.MockComponent />
+          <this.MockComponent />
         </Suspense>
       </div>
     ) : null;

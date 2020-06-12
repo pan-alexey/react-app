@@ -1,7 +1,6 @@
 import { hot } from 'react-hot-loader/root';
 import React, { Component } from 'react';
 import Components from '~src/components/Components';
-import './sass/app.scss';
 
 class App extends Component {
   state = {
@@ -27,13 +26,14 @@ class App extends Component {
   };
   render() {
     return (
-      <div>
-        <h1>{this.state.count}</h1>
+      <>
+        <h1>Пример react</h1>
+        <p>{this.state.count}</p>
         <button onClick={this.increment}>Increment</button>
         <button onClick={this.decrement}>Decrement</button>
         <input value={this.state.count} onChange={this.handleChange}></input>
         <Components />
-      </div>
+      </>
     );
   }
 }
