@@ -1,48 +1,31 @@
 /* eslint-disable @typescript-eslint/no-useless-constructor */
 /* eslint-disable react/prop-types */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import React, { Component } from 'react';
-import MockComponent from './MockComponent';
+import React, { Component, Suspense } from 'react';
 import styles from '~src/sass/main.module.scss';
-
-import { IStateType } from '~src/store/';
 import { connect } from 'react-redux';
-
+const MockComponent = React.lazy(() => import('./MockComponent'));
 class Components extends Component<unknown> {
   state = {
-    count: 0,
+    canRender: false,
   };
 
-  increment = () => {
-    this.setState({
-      count: this.state.count + 1,
-    });
-  };
-
-  decrement = () => {
-    this.setState({
-      count: this.state.count - 1,
-    });
-  };
-
-  handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({
-      count: parseInt(event.target.value),
-    });
-  };
+  componentDidMount() {
+    this.setState({ canRender: true });
+  }
 
   render() {
-    return (
+    const { canRender } = this.state;
+    return canRender ? (
       <div className={styles.app}>
-        <h1>{this.state.count}</h1>
-        <button onClick={this.increment}>Increment</button>
-        <button onClick={this.decrement}>Decrement</button>
-        <input value={this.state.count} onChange={this.handleChange}></input>
-        <MockComponent />
-        <MockComponent />
-        <MockComponent />
+        <Suspense fallback={<div>Загрузка...</div>}>
+          <MockComponent />
+          <MockComponent />
+          <MockComponent />
+          <MockComponent />
+        </Suspense>
       </div>
-    );
+    ) : null;
   }
 }
 

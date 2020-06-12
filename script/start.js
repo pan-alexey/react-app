@@ -54,8 +54,13 @@ webpackCompliller['client'] = webpackClinet();
       WebpackHooks.regiserPort(server.listeningApp.address().port);
     },
     after: (app, server) => {
-      app.use((req, res, next) => {
-        serverMiddleware(req, res, next);
+      app.use(async (req, res, next) => {
+        try {
+          serverMiddleware(req, res, next);
+        } catch (error) {
+          console.log('server error');
+          console.log(error);
+        }
       });
     },
   }).listen(DEFAULT_PORT, HOST, (err) => {
