@@ -6,8 +6,6 @@ import footer from './template/footer.ejs';
 import renderApp from './helpers/renderApp';
 const app = express.Router();
 
-app.use('public', express.static('public'));
-
 app.use('*', (req, res, next) => {
   next();
 });

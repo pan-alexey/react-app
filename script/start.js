@@ -1,4 +1,5 @@
 'use strict';
+process.env.NODE_ENV = 'development';
 
 const path = require('path');
 const WebpackDevServer = require('webpack-dev-server');
@@ -47,10 +48,12 @@ webpackCompliller['client'] = webpackClinet();
     historyApiFallback: true,
     noInfo: true,
     stats: 'none',
+    contentBase: 'public',
+    contentBasePublicPath: '/public',
     onListening: function (server) {
       WebpackHooks.regiserPort(server.listeningApp.address().port);
     },
-    after: (app) => {
+    after: (app, server) => {
       app.use((req, res, next) => {
         serverMiddleware(req, res, next);
       });

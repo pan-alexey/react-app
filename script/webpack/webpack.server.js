@@ -6,8 +6,10 @@ const nodeExternals = require('webpack-node-externals');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const cssLoader = require('./helpers/cssLoader');
 
+const isProduction = process.env.NODE_ENV === 'production';
+
 const webpackConfig = {
-  mode: 'development',
+  mode: isProduction ? 'production' : 'development',
   target: 'node',
   externals: [nodeExternals()],
   entry: [paths.resolve('./server/app.tsx')],

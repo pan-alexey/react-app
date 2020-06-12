@@ -12,5 +12,6 @@ module.exports = {
   src: resolve('./src'),
   server: resolve('./server'),
   build: resolve('./build'),
-  dist: resolve('./dist'),
+  dist: resolve('./build/dist'),
+  public: resolve('./public'),
 };
