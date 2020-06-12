@@ -27,6 +27,9 @@ const webpackConfig = {
     filename: 'server.js',
   },
   plugins: [
+    new webpack.optimize.LimitChunkCountPlugin({
+      maxChunks: isProduction ? 1 : 40
+    }),
     new MiniCssExtractPlugin({
       filename: '[name].css',
       chunkFilename: '[id].css',

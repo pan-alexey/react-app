@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node ./script/start.js",
     "build": "node ./script/build.js",
-    "start:prod": "node ./build/server.js",
+    "prod": "node ./build/server.js",
     "test": "jest",
     "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet",
     "lint:fix": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix"
@@ -62,6 +62,7 @@
     "prettier-eslint-cli": "5.0.0",
     "raw-loader": "^4.0.1",
     "react-hot-loader": "^4.12.21",
+    "rimraf": "^3.0.2",
     "sass-loader": "^8.0.2",
     "style-loader": "^1.2.1",
     "styled-components": "^5.1.1",
