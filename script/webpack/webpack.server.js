@@ -17,7 +17,7 @@ const webpackConfig = {
       '~src': paths.src,
       '~server': paths.server,
     },
-    extensions: ['.scss', '.js', 'jsx', '.ts', '.tsx'],
+    extensions: ['.scss', '.js', 'jsx', '.ts', '.tsx', 'ejs'],
   },
   output: {
     libraryTarget: 'umd',
@@ -49,6 +49,17 @@ const webpackConfig = {
         test: /\.(scss|sass|css)$/,
         exclude: /node_modules/,
         use: [cssLoader(true), 'sass-loader'],
+      },
+      {
+        test: /\.ejs$/i,
+        use: [
+          {
+            loader: 'raw-loader',
+            options: {
+              esModule: false,
+            },
+          },
+        ],
       },
     ],
   },

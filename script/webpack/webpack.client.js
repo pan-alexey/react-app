@@ -12,7 +12,7 @@ const webpackConfig = {
   entry: [paths.resolve('./src/index.tsx')],
   resolve: {
     alias: {
-      'react-dom': '@hot-loader/react-dom',
+      'react-dom': '@hot-loader/react-dom', // patch for real react hot module
       '~': paths.root,
       '~src': paths.src,
       '~server': paths.server,

@@ -9,18 +9,13 @@ import { Provider } from 'react-redux';
 import App from './App';
 import reducer from './store';
 
-declare const window: {
-  __PRELOADED_STATE__: unknown;
-};
-window.__PRELOADED_STATE__ = { str: 'client1' };
-const __PRELOADED_STATE__ = window.__PRELOADED_STATE__;
-delete window.__PRELOADED_STATE__;
-
-const store = createStore(reducer, { str: 'client' });
-
 const rootElement = document.getElementById('root');
 
 if (rootElement) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const __PRELOADED_STATE__ = (window as any).__INITIAL_DATA__;
+  const store = createStore(reducer, __PRELOADED_STATE__);
+
   const reactDomHandler = rootElement.childNodes.length ? ReactDOM.hydrate : ReactDOM.render;
   reactDomHandler(
     <Provider store={store}>

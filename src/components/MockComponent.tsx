@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 
 import styles from '~src/sass/main.module.scss';
 

@@ -17,11 +17,12 @@ interface actionType2 {
 
 type actionType = actionType1 | actionType2;
 
-interface stateType {
+export interface IStateType {
   str: string;
+  color?: string;
 }
 
-const reducer = (state: stateType = { str: '' }, action: actionType): stateType => {
+const reducer = (state: IStateType = { str: '' }, action: actionType): IStateType => {
   switch (action.type) {
     case Action.action1:
       return {
