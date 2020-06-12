@@ -13,6 +13,7 @@ const webpackConfig = {
   entry: [paths.resolve('./server/app.tsx')],
   resolve: {
     alias: {
+      '~': paths.root,
       '~src': paths.src,
       '~server': paths.server,
     },
@@ -48,14 +49,6 @@ const webpackConfig = {
         test: /\.(scss|sass|css)$/,
         exclude: /node_modules/,
         use: [cssLoader(true), 'sass-loader'],
-      },
-      {
-        test: /\.(ttf|eot|otf|svg|png)$/,
-        loader: 'file-loader',
-      },
-      {
-        test: /\.(woff|woff2)$/,
-        loader: 'url-loader',
       },
     ],
   },

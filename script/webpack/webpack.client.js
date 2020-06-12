@@ -13,6 +13,7 @@ const webpackConfig = {
   resolve: {
     alias: {
       'react-dom': '@hot-loader/react-dom',
+      '~': paths.root,
       '~src': paths.src,
       '~server': paths.server,
     },
