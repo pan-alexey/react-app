@@ -4,9 +4,9 @@ import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import { Response } from 'express';
 
-import reducer from '~/src/store';
+import reducer from '~src/store';
 
-import App from '~/src/App';
+import App from '~src/App';
 
 const store = createStore(reducer, {
   str: 'server',
