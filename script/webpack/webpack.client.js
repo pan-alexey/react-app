@@ -23,6 +23,7 @@ const webpackConfig = {
     path: paths.dist,
     filename: 'index.js',
     chunkFilename: 'js/[name].[contenthash:8].js',
+    // publicPath: 'https://react.vxv.me/', for cdn chucnk
   },
   plugins: [
     new webpack.optimize.LimitChunkCountPlugin({
