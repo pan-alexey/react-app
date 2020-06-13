@@ -2,7 +2,7 @@
 process.env.NODE_ENV = 'production';
 
 const paths = require('./utils/paths');
-const rimraf = require("rimraf");
+const rimraf = require('rimraf');
 const webpackCompliller = {};
 
 const webpackServer = require('./webpack/webpack.server');
@@ -17,6 +17,14 @@ webpackCompliller['client'] = webpackClinet({
 
 (async function () {
   rimraf.sync(paths.build);
-  webpackCompliller['client'].run();
-  webpackCompliller['server'].run();
+  webpackCompliller['client'].run((err, stats) => {
+    console.log('client build:');
+    console.log(stats.toString());
+    console.log('');
+  });
+  webpackCompliller['server'].run((err, stats) => {
+    console.log('server build:');
+    console.log(stats.toString());
+    console.log('');
+  });
 })();

@@ -28,11 +28,11 @@ const webpackConfig = {
   },
   plugins: [
     new webpack.optimize.LimitChunkCountPlugin({
-      maxChunks: isProduction ? 1 : 40
+      maxChunks: 1,
     }),
     new MiniCssExtractPlugin({
-      filename: '[name].css',
-      chunkFilename: '[id].css',
+      filename: 'main.css',
+      chunkFilename: 'css/[name].[contenthash:8].css',
     }),
   ],
   optimization: {

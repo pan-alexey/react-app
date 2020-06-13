@@ -25,9 +25,12 @@ const webpackConfig = {
     chunkFilename: 'js/[name].[contenthash:8].js',
   },
   plugins: [
+    new webpack.optimize.LimitChunkCountPlugin({
+      maxChunks: 40,
+    }),
     new MiniCssExtractPlugin({
-      filename: '[name].css',
-      chunkFilename: '[id].css',
+      filename: 'main.css',
+      chunkFilename: 'css/[name].[contenthash:8].css',
     }),
   ],
   module: {
