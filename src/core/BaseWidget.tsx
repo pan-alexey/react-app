@@ -1,6 +1,9 @@
 // Base widget:
 // Error Capturing
 // Rendering stats
+
+// для сервера https://github.com/zekchan/react-ssr-error-boundary/blob/master/src/server.js
+
 import React from 'react';
 
 import MockComponent from '~src/components/MockComponent';
