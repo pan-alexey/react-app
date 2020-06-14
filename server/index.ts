@@ -7,7 +7,7 @@ const app = express();
 const rootPath = fs.realpathSync(process.cwd());
 const resolve = (relativePath: string) => path.resolve(rootPath, relativePath);
 
-app.use(express.static(resolve('./public')));
+app.use('/public', express.static(resolve('./public')));
 app.use(express.static(resolve('./build/dist')));
 
 app.use(server);

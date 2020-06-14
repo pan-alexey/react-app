@@ -1,6 +1,7 @@
 import { hot } from 'react-hot-loader/root';
 import React, { Component } from 'react';
 import Components from '~src/components/Components';
+import MockComponent from '~/components/MockComponent';
 
 class App extends Component {
   state = {
@@ -25,13 +26,23 @@ class App extends Component {
     });
   };
   render() {
+    const components = [];
+    for (let i = 0; i < this.state.count; i++) {
+      components.push(<MockComponent />);
+    }
+
     return (
       <>
         <h1>Пример react</h1>
         <p>{this.state.count}</p>
         <button onClick={this.increment}>Increment</button>
         <button onClick={this.decrement}>Decrement</button>
-        <input value={this.state.count} onChange={this.handleChange}></input>
+        {/* <input value={this.state.count} onChange={this.handleChange}></input> */}
+        <br />
+        {components.map((component, index) => (
+          <React.Fragment key={index}>-{component}</React.Fragment>
+        ))}
+        <MockComponent />
         <Components />
       </>
     );
