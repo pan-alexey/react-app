@@ -7,6 +7,11 @@ import { connect } from 'react-redux';
 class Components extends Component<unknown> {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   AsyncComponent: any = null;
+  benchmark: {
+    start?: number;
+    didMount?: number;
+    afterRender?: number;
+  } = {};
 
   state = {
     canRender: false,
@@ -15,15 +20,19 @@ class Components extends Component<unknown> {
   componentDidMount() {
     this.AsyncComponent = React.lazy(() => import('./MockComponent'));
     this.setState((state) => state);
+    this.benchmark['didMount'] = Date.now();
   }
 
   render() {
-    return this.AsyncComponent ? (
+    const result = this.AsyncComponent ? (
       // fallback работает и на сервере;
       <Suspense fallback={<div>Загрузка...</div>}>
         <this.AsyncComponent />
       </Suspense>
     ) : null;
+
+    this.benchmark['afterRender'] = Date.now();
+    return result;
   }
 }
 
