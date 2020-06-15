@@ -22,7 +22,6 @@ class ErrorBoundary extends React.Component {
   };
 
   static getDerivedStateFromError() {
-    // Обновить состояние с тем, чтобы следующий рендер показал запасной UI.
     return { hasError: true };
   }
 
@@ -37,19 +36,19 @@ class ErrorBoundary extends React.Component {
   }
 
   render() {
-    if (server) {
-      return <div>Проиошла ошибка на сервере</div>;
-    }
+    try {
+      console.log(this.props.children);
+      const html = renderToStaticMarkup(<>{this.props.children}</>);
 
-    if (this.state.hasError) {
-      return <div>Проиошла ошибка на клиенте</div>;
+      console.log(html);
+    } catch (error) {
+      console.log('**error**', error);
     }
-
-    return this.props.children;
+    return <div>Проиошла ошибка на сервере</div>;
   }
 }
 
-const WidgetWrapper = (name: string) => {
+const WidgetWrapper = (WidgetName?: string) => {
   return class Widget extends React.Component {
     state = {
       hasError: false,

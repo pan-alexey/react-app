@@ -20,7 +20,7 @@ class Components extends Component {
       );
     }
 
-    throw new Error('some error');
+    // throw new Error('some error');
 
     return (
       <div className={styles.div}>
