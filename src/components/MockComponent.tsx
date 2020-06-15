@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import React, { Component } from 'react';
-import { hot } from 'react-hot-loader/root';
-// import styles from '~src/sass/mock.module.scss';
+import { connect } from 'react-redux';
+// import { hot } from 'react-hot-loader/root';
+import styles from '~src/sass/mock.module.scss';
 
 class Components extends Component {
   render() {
@@ -22,10 +23,9 @@ class Components extends Component {
     throw new Error('some error');
 
     return (
-      <div>
-        {/* <div className={styles.div}>{ceil}</div> */}
+      <div className={styles.div}>
         <p>
-          <div></div>
+          <b>{JSON.stringify(this.props)}</b>
           Lorem ipsum vitae massa ut adipiscing nam cursus donec fusce eget pharetra&nbsp;&mdash; diam. Massa tempus et
           proin fusce pharetra congue sit, nibh sagittis, leo. Enim leo in fusce nulla lorem eros maecenas justo morbi
           urna eget fusce eros odio sit maecenas. Morbi sit sagittis at adipiscing, justo leo molestie
@@ -37,4 +37,11 @@ class Components extends Component {
 }
 
 // Hot becouse Components is lazy
-export default hot(Components);
+// export default hot(Components);
+
+export default connect(
+  (state) => ({
+    reduxStore: state,
+  }),
+  (dispatch) => ({}),
+)(Components);

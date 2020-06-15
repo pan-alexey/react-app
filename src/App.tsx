@@ -1,4 +1,3 @@
-import { hot } from 'react-hot-loader/root';
 import React, { Component } from 'react';
 import Components from '~src/components/Components';
 import MockComponent from '~src/components/MockComponent';
@@ -48,7 +47,7 @@ class App extends Component<unknown> {
     try {
       const components = [];
       for (let i = 0; i < this.state.count; i++) {
-        components.push(<MockComponent />);
+        // components.push(<MockComponent />);
       }
       const result = (
         <>
@@ -78,4 +77,5 @@ class App extends Component<unknown> {
   }
 }
 
-export default hot(App);
+// export default App;
+export default App;

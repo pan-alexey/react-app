@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
 import { createStore, applyMiddleware } from 'redux';
+import { hot } from 'react-hot-loader/root';
 
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
@@ -11,6 +12,8 @@ import './sass/app.scss';
 
 const rootElement = document.getElementById('root');
 
+const HotApp = hot(App);
+
 if (rootElement) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const __PRELOADED_STATE__ = (window as any).__INITIAL_DATA__;
@@ -19,7 +22,7 @@ if (rootElement) {
   const reactDomHandler = rootElement.childNodes.length ? ReactDOM.hydrate : ReactDOM.render;
   reactDomHandler(
     <Provider store={store}>
-      <App />
+      <HotApp />
     </Provider>,
     rootElement,
   );

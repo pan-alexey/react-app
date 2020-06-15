@@ -12,7 +12,7 @@ const render = (request: Request, response?: Response) => {
   // request for create store param
   const store = createStore(reducer, {
     str: new Date().toUTCString(),
-    color: 'red',
+    color: 'blue',
   });
 
   return new Promise<string>((resolve) => {

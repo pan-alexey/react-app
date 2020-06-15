@@ -25,10 +25,12 @@ class Components extends Component<unknown> {
 
   render() {
     const result = this.AsyncComponent ? (
-      // fallback работает и на сервере;
-      <Suspense fallback={<div>Загрузка...</div>}>
-        <this.AsyncComponent />
-      </Suspense>
+      <>
+        {JSON.stringify(this.props)}
+        <Suspense fallback={<div>Загрузка...</div>}>
+          <this.AsyncComponent />
+        </Suspense>
+      </>
     ) : null;
 
     this.benchmark['afterRender'] = Date.now();

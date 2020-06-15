@@ -1,12 +1,16 @@
+/* eslint-disable react/prop-types */
 // Base widget:
 // Error Capturing
 // Rendering stats
 
 // для сервера https://github.com/zekchan/react-ssr-error-boundary/blob/master/src/server.js
-
 import React from 'react';
 
+import { renderToStaticMarkup } from 'react-dom/server';
+
 import MockComponent from '~src/components/MockComponent';
+
+const server = typeof window === 'undefined' && renderToStaticMarkup;
 
 const Components: { [key: string]: React.ElementType } = {
   MockComponent,
@@ -14,19 +18,33 @@ const Components: { [key: string]: React.ElementType } = {
 
 class ErrorBoundary extends React.Component {
   state = {
-    hasError: true,
+    hasError: false,
   };
 
   static getDerivedStateFromError() {
+    // Обновить состояние с тем, чтобы следующий рендер показал запасной UI.
     return { hasError: true };
   }
 
+  componentDidCatch() {
+    this.setState({
+      hasError: true,
+    });
+  }
+
+  errMsg() {
+    return <div>Проиошла ошибка</div>;
+  }
+
   render() {
-    if (this.state.hasError) {
-      return <div>Fallback UI</div>;
+    if (server) {
+      return <div>Проиошла ошибка на сервере</div>;
     }
 
-    // eslint-disable-next-line react/prop-types
+    if (this.state.hasError) {
+      return <div>Проиошла ошибка на клиенте</div>;
+    }
+
     return this.props.children;
   }
 }
@@ -36,21 +54,6 @@ const WidgetWrapper = (name: string) => {
     state = {
       hasError: false,
     };
-
-    componentDidCatch() {
-      // Можно также сохранить информацию об ошибке в соответствующую службу журнала ошибок
-      console.log('+++++++++');
-      // console.log(error);
-      console.log('+++++++++');
-    }
-
-    static getDerivedStateFromError() {
-      // Обновить состояние с тем, чтобы следующий рендер показал запасной UI.
-      console.log('+++++++++');
-      // console.log(error);
-      console.log('+++++++++');
-      return { hasError: true };
-    }
 
     componentDidMount() {
       console.log('componentDidMount');
