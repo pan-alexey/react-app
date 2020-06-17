@@ -3,6 +3,15 @@
 // Error Capturing
 // Rendering stats
 
+/*
+В случае сервера, виджет рендерится в статичную html разметку, но нужен оверхед
+1. подключения стора в виджете и прокидывания его в компонент
+2. пытаемся отрисовать разметку. Если все ок, то в виджете рендерим html
+
+
+
+*/
+
 // для сервера https://github.com/zekchan/react-ssr-error-boundary/blob/master/src/server.js
 import React from 'react';
 
