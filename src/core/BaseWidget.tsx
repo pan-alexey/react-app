@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 // Base widget:
 // Error Capturing
 // Rendering stats
@@ -8,68 +7,19 @@
 1. подключения стора в виджете и прокидывания его в компонент
 2. пытаемся отрисовать разметку. Если все ок, то в виджете рендерим html
 
-
-
 */
 
 // для сервера https://github.com/zekchan/react-ssr-error-boundary/blob/master/src/server.js
 import React from 'react';
-import { renderToStaticMarkup } from 'react-dom/server';
-import { createStore } from 'redux';
-import { Provider, connect } from 'react-redux';
+import ErrorBoundary from './ErrorBoundary';
 
 import MockComponent from '~src/components/MockComponent';
 import Component from '~src/components/Components';
-
-import reducer from '~src/store';
-
-const server = typeof window === 'undefined' && renderToStaticMarkup;
 
 const Components: { [key: string]: React.ElementType } = {
   MockComponent,
   Component,
 };
-
-class ErrorBoundary extends React.Component {
-  state = {
-    hasError: false,
-  };
-
-  static getDerivedStateFromError() {
-    return { hasError: true };
-  }
-
-  componentDidCatch() {
-    this.setState({
-      hasError: true,
-    });
-  }
-
-  errMsg() {
-    return <div>Проиошла ошибка</div>;
-  }
-
-  render() {
-    if (server) {
-      try {
-        // Попытка рендеринга компонента
-        const store = createStore(reducer);
-        const html = renderToStaticMarkup(
-          <Provider store={store} key="provider">
-            {this.props.children}
-          </Provider>,
-        );
-
-        return this.props.children;
-      } catch (error) {
-        console.log(error);
-        return null;
-      }
-    }
-
-    return this.props.children;
-  }
-}
 
 const WidgetWrapper = (WidgetName: string) => {
   const Widget = class Widget extends React.Component {
@@ -82,9 +32,10 @@ const WidgetWrapper = (WidgetName: string) => {
     }
     render() {
       // const WidgetName = 'MockComponent';
+      console.log(this.props);
       const Component = Components[WidgetName];
       return (
-        <ErrorBoundary>
+        <ErrorBoundary key="base">
           <Component {...this.props} />
         </ErrorBoundary>
       );
@@ -92,9 +43,6 @@ const WidgetWrapper = (WidgetName: string) => {
   };
 
   return Widget;
-  // return connect((state) => ({
-  //   reduxStore: state,
-  // })(Widget)
 };
 
 const Widget = (name: string) => {
