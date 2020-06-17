@@ -24,6 +24,7 @@ class Components extends Component<unknown> {
   }
 
   render() {
+    throw new Error('1');
     const result = this.AsyncComponent ? (
       <>
         {JSON.stringify(this.props)}

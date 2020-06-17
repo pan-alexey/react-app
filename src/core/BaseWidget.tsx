@@ -14,15 +14,20 @@
 
 // для сервера https://github.com/zekchan/react-ssr-error-boundary/blob/master/src/server.js
 import React from 'react';
-
 import { renderToStaticMarkup } from 'react-dom/server';
+import { createStore } from 'redux';
+import { Provider, connect } from 'react-redux';
 
 import MockComponent from '~src/components/MockComponent';
+import Component from '~src/components/Components';
+
+import reducer from '~src/store';
 
 const server = typeof window === 'undefined' && renderToStaticMarkup;
 
 const Components: { [key: string]: React.ElementType } = {
   MockComponent,
+  Component,
 };
 
 class ErrorBoundary extends React.Component {
@@ -45,20 +50,29 @@ class ErrorBoundary extends React.Component {
   }
 
   render() {
-    try {
-      console.log(this.props.children);
-      const html = renderToStaticMarkup(<>{this.props.children}</>);
+    if (server) {
+      try {
+        // Попытка рендеринга компонента
+        const store = createStore(reducer);
+        const html = renderToStaticMarkup(
+          <Provider store={store} key="provider">
+            {this.props.children}
+          </Provider>,
+        );
 
-      console.log(html);
-    } catch (error) {
-      console.log('**error**', error);
+        return this.props.children;
+      } catch (error) {
+        console.log(error);
+        return null;
+      }
     }
-    return <div>Проиошла ошибка на сервере</div>;
+
+    return this.props.children;
   }
 }
 
-const WidgetWrapper = (WidgetName?: string) => {
-  return class Widget extends React.Component {
+const WidgetWrapper = (WidgetName: string) => {
+  const Widget = class Widget extends React.Component {
     state = {
       hasError: false,
     };
@@ -67,7 +81,7 @@ const WidgetWrapper = (WidgetName?: string) => {
       console.log('componentDidMount');
     }
     render() {
-      const WidgetName = 'MockComponent';
+      // const WidgetName = 'MockComponent';
       const Component = Components[WidgetName];
       return (
         <ErrorBoundary>
@@ -76,6 +90,11 @@ const WidgetWrapper = (WidgetName?: string) => {
       );
     }
   };
+
+  return Widget;
+  // return connect((state) => ({
+  //   reduxStore: state,
+  // })(Widget)
 };
 
 const Widget = (name: string) => {

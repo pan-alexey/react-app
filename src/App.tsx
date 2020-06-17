@@ -47,22 +47,22 @@ class App extends Component<unknown> {
     try {
       const components = [];
       for (let i = 0; i < this.state.count; i++) {
-        // components.push(<MockComponent />);
+        components.push(<MockComponent />);
       }
       const result = (
         <>
           {BaseWidget('MockComponent')}
+          {BaseWidget('Component')}
           <h1>Пример react</h1>
           <p>{this.state.count}</p>
           <button onClick={this.increment}>Increment</button>
           <button onClick={this.decrement}>Decrement</button>
           {/* <input value={this.state.count} onChange={this.handleChange}></input> */}
           <br />
-          {/* {components.map((component, index) => (
+          {components.map((component, index) => (
             <React.Fragment key={index}>******{component}</React.Fragment>
-          ))} */}
+          ))}
           {/* <MockComponent /> */}
-          {/* <Components /> */}
         </>
       );
 

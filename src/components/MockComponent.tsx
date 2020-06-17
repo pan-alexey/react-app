@@ -20,8 +20,6 @@ class Components extends Component {
       );
     }
 
-    // throw new Error('some error');
-
     return (
       <div className={styles.div}>
         <p>
@@ -38,6 +36,7 @@ class Components extends Component {
 
 // Hot becouse Components is lazy
 // export default hot(Components);
+// export default Components;
 
 export default connect(
   (state) => ({
