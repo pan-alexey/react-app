@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import BaseWidget, { IWidget } from '~src/core/BaseWidget';
+import BaseWidget from '~src/core/BaseWidget';
 
 class App extends Component<unknown> {
   state = {
@@ -53,8 +53,19 @@ class App extends Component<unknown> {
           <button onClick={this.decrement}>Decrement</button>
           {/* <input value={this.state.count} onChange={this.handleChange}></input> */}
           <br />
-          <BaseWidget componentName={'MockComponent'} />
-          {/* <MockComponent /> */}
+          <div>
+            <div>MockComponent</div>
+            <BaseWidget componentName={'MockComponent'} />
+          </div>
+          <div>
+            <div>Components</div>
+            <BaseWidget componentName={'Components'} />
+          </div>
+          <br />
+          <div>
+            <div>MockComponent</div>
+            <BaseWidget componentName={'MockComponent'} />
+          </div>
         </>
       );
 

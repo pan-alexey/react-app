@@ -11,8 +11,11 @@
 
 // для сервера https://github.com/zekchan/react-ssr-error-boundary/blob/master/src/server.js
 import React from 'react';
-import { connect } from 'react-redux';
+import { renderToStaticMarkup } from 'react-dom/server';
+import { createStore } from 'redux';
+import { Provider, connect } from 'react-redux';
 
+import reducer from '~src/store';
 import MockComponent from '~src/components/MockComponent';
 import Components from '~src/components/Components';
 
@@ -26,17 +29,49 @@ export interface IWidget {
   store?: any;
 }
 
-class Widget extends React.Component<IWidget> {
-  render() {
-    const props = this.props.store;
-    const { componentName } = this.props;
+const isServer = typeof window === 'undefined';
 
+class Widget extends React.Component<IWidget> {
+  state = {
+    error: false,
+  };
+
+  static getDerivedStateFromError() {
+    // Обновить состояние с тем, чтобы следующий рендер показал запасной UI.
+    return { error: true };
+  }
+
+  render() {
+    const props = { a: 'a', b: 'b' };
+    const { componentName } = this.props;
     const WidgetComponent: React.ElementType = components[componentName];
 
-    if (WidgetComponent) {
-      return <WidgetComponent {...props} />;
+    if (!WidgetComponent) return null;
+
+    if (!isServer) {
+      return this.state.error ? (
+        <div className="widget"></div>
+      ) : (
+        <div className="widget">
+          <WidgetComponent {...props} />
+        </div>
+      );
     }
-    return null;
+
+    const reduxState = this.props.store || {};
+    const store = createStore(reducer, reduxState);
+    try {
+      const __html = renderToStaticMarkup(
+        <Provider store={store} key="provider">
+          <WidgetComponent {...props} />
+        </Provider>,
+      );
+
+      return <div className="widget" dangerouslySetInnerHTML={{ __html }} />;
+    } catch (err) {
+      console.log(err);
+      return <div className="widget"></div>;
+    }
   }
 }
 

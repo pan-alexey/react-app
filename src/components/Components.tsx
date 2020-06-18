@@ -9,7 +9,7 @@ class Components extends Component<unknown> {
 
   constructor(props: unknown) {
     super(props);
-    const a: string = JSON.stringify({ a: 'a' }) + 'a';
+    // const a: string = JSON.stringify({ a: 'a' }) + 'a';
     // const b = JSON.parse(a);
   }
 
