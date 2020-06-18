@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import Components from '~src/components/Components';
-import MockComponent from '~src/components/MockComponent';
-import BaseWidget from '~src/core/BaseWidget';
+import BaseWidget, { IWidget } from '~src/core/BaseWidget';
 
 class App extends Component<unknown> {
   state = {
@@ -45,23 +43,17 @@ class App extends Component<unknown> {
   };
   render() {
     try {
-      const components = [];
-      for (let i = 0; i < this.state.count; i++) {
-        components.push(<MockComponent />);
-      }
       const result = (
         <>
-          {BaseWidget('MockComponent')}
-          {BaseWidget('Component')}
+          {/* {BaseWidget('MockComponent')}
+          {BaseWidget('Component')} */}
           <h1>Пример react</h1>
           <p>{this.state.count}</p>
           <button onClick={this.increment}>Increment</button>
           <button onClick={this.decrement}>Decrement</button>
           {/* <input value={this.state.count} onChange={this.handleChange}></input> */}
           <br />
-          {components.map((component, index) => (
-            <React.Fragment key={index}>******{component}</React.Fragment>
-          ))}
+          <BaseWidget componentName={'MockComponent'} />
           {/* <MockComponent /> */}
         </>
       );
@@ -70,9 +62,6 @@ class App extends Component<unknown> {
     } catch (error) {
       console.log(error);
     }
-
-    this.benchmark['afterRender'] = Date.now();
-    console.log(this.benchmark['afterRender'] - this.benchmark['start'] + 'ms');
     return <div>500</div>;
   }
 }

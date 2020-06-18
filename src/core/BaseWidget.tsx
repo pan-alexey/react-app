@@ -11,49 +11,35 @@
 
 // для сервера https://github.com/zekchan/react-ssr-error-boundary/blob/master/src/server.js
 import React from 'react';
-import ErrorBoundary from './ErrorBoundary';
+import { connect } from 'react-redux';
 
 import MockComponent from '~src/components/MockComponent';
-import Component from '~src/components/Components';
+import Components from '~src/components/Components';
 
-const Components: { [key: string]: React.ElementType } = {
+const components: { [key: string]: React.ElementType } = {
   MockComponent,
-  Component,
+  Components,
 };
 
-const WidgetWrapper = (WidgetName: string) => {
-  const Widget = class Widget extends React.Component {
-    state = {
-      hasError: false,
-    };
+export interface IWidget {
+  componentName: string;
+  store?: any;
+}
 
-    componentDidMount() {
-      console.log('componentDidMount');
+class Widget extends React.Component<IWidget> {
+  render() {
+    const props = this.props.store;
+    const { componentName } = this.props;
+
+    const WidgetComponent: React.ElementType = components[componentName];
+
+    if (WidgetComponent) {
+      return <WidgetComponent {...props} />;
     }
-    render() {
-      // const WidgetName = 'MockComponent';
-      console.log(this.props);
-      const Component = Components[WidgetName];
-      return (
-        <ErrorBoundary key="base">
-          <Component {...this.props} />
-        </ErrorBoundary>
-      );
-    }
-  };
+    return null;
+  }
+}
 
-  return Widget;
-};
-
-const Widget = (name: string) => {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const props: any = {
-    a: 'a',
-    b: 'b',
-  };
-
-  const Element = React.createElement(WidgetWrapper(name), { ...props });
-  return Element;
-};
-
-export default Widget;
+export default connect((state) => ({
+  store: state,
+}))(Widget);

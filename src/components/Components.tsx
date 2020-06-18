@@ -6,6 +6,13 @@ import { connect } from 'react-redux';
 
 class Components extends Component<unknown> {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
+
+  constructor(props: unknown) {
+    super(props);
+    const a: string = JSON.stringify({ a: 'a' }) + 'a';
+    // const b = JSON.parse(a);
+  }
+
   AsyncComponent: any = null;
   benchmark: {
     start?: number;
