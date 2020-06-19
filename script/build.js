@@ -1,5 +1,6 @@
 'use strict';
 process.env.NODE_ENV = 'production';
+process.NODE_ENV = 'production';
 
 const paths = require('./utils/paths');
 const rimraf = require('rimraf');

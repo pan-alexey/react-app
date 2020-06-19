@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 // Base widget:
 // Error Capturing
 // Rendering stats
@@ -31,16 +32,29 @@ export interface IWidget {
 
 const isServer = typeof window === 'undefined';
 
-class Widget extends React.Component<IWidget> {
-  state = {
-    error: false,
-  };
+class ErrorBoundary extends React.Component {
+  state = { hasError: false };
 
   static getDerivedStateFromError() {
     // Обновить состояние с тем, чтобы следующий рендер показал запасной UI.
-    return { error: true };
+    return { hasError: true };
   }
 
+  componentDidCatch() {
+    // Customized error handling goes here!
+  }
+
+  render() {
+    if (this.state.hasError) {
+      // Можно отрендерить запасной UI произвольного вида
+      return <h1>Что-то пошло не так.</h1>;
+    }
+
+    return this.props.children;
+  }
+}
+
+class Widget extends React.Component<IWidget> {
   render() {
     const props = { a: 'a', b: 'b' };
     const { componentName } = this.props;
@@ -49,11 +63,11 @@ class Widget extends React.Component<IWidget> {
     if (!WidgetComponent) return null;
 
     if (!isServer) {
-      return this.state.error ? (
-        <div className="widget"></div>
-      ) : (
+      return (
         <div className="widget">
-          <WidgetComponent {...props} />
+          <ErrorBoundary>
+            <WidgetComponent {...props} />
+          </ErrorBoundary>
         </div>
       );
     }
