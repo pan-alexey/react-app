@@ -1,85 +1,22 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { Component } from 'react';
-import BaseWidget from '~src/core/BaseWidget';
-
-class App extends Component<any> {
-  state = {
-    count: 0,
-  };
-
-  benchmark: {
-    start: number;
-    didMount?: number;
-    afterRender?: number;
-  } = {
-    start: 0,
-    afterRender: 0,
-  };
-
-  constructor(prop: any) {
-    super(prop);
-    console.log(prop);
-
-    this.benchmark['start'] = Date.now();
-  }
-
-  componentDidUpdate() {
-    this.benchmark['start'] = Date.now();
-  }
-
-  increment = () => {
-    this.setState({
-      count: this.state.count + 1,
-    });
-  };
-
-  decrement = () => {
-    this.setState({
-      count: this.state.count - 1,
-    });
-  };
-
-  handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({
-      count: parseInt(event.target.value),
-    });
-  };
+import BaseWidget from './core/BaseWidget';
+class App extends Component<{ data: any }> {
   render() {
-    try {
-      const result = (
-        <>
-          {/* {BaseWidget('MockComponent')}
-          {BaseWidget('Component')} */}
+    return (
+      <>
+        <h1>React</h1>
+        <div>
+          BaseWidget (Components)
+          <BaseWidget componentName={'Components'} />
+        </div>
+        <div>
+          PROPS
           {JSON.stringify(this.props)}
-          <h1>Пример react</h1>
-          <p>{this.state.count}</p>
-          <button onClick={this.increment}>Increment</button>
-          <button onClick={this.decrement}>Decrement</button>
-          {/* <input value={this.state.count} onChange={this.handleChange}></input> */}
-          <br />
-          <div>
-            <div>MockComponent</div>
-            <BaseWidget componentName={'MockComponent'} />
-          </div>
-          <div>
-            <div>Components</div>
-            <BaseWidget componentName={'Components'} />
-          </div>
-          <br />
-          <div>
-            <div>MockComponent</div>
-            <BaseWidget componentName={'MockComponent'} />
-          </div>
-        </>
-      );
-
-      return result;
-    } catch (error) {
-      console.log(error);
-    }
-    return <div>500</div>;
+        </div>
+      </>
+    );
   }
 }
 
-// export default App;
 export default App;

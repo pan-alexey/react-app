@@ -1,12 +1,11 @@
 import React from 'react';
 import { renderToString, renderToNodeStream } from 'react-dom/server';
-import { createStore } from 'redux';
-import { Provider } from 'react-redux';
 import { Response, Request } from 'express';
 
+import { createStore } from 'redux';
 import reducer from '~src/store';
 
-import App from '~src/App';
+import Main from '~src/main';
 
 const render = (request: Request, response?: Response) => {
   // request for create store param
@@ -22,13 +21,10 @@ const render = (request: Request, response?: Response) => {
   return new Promise<string>((resolve) => {
     let state = `<script>window.__DATA__ = ${JSON.stringify(data)};</script>`;
     state += `<script>window.__STORE__ = ${JSON.stringify(store.getState())};</script>`;
-    let renderResult = '';
-    const app = (
-      <Provider store={store} key="provider">
-        <App data={data} />
-      </Provider>
-    );
 
+    const app = <Main store={store} data={data} />;
+
+    let renderResult = '';
     if (response) {
       response.write(state);
       renderResult += state;
