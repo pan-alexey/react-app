@@ -9,10 +9,11 @@ class App extends Component<{ data: any }> {
         <div>
           BaseWidget (Components)
           <BaseWidget componentName={'Components'} />
+          <BaseWidget componentName={'MockComponent'} />
         </div>
         <div>
           PROPS
-          {JSON.stringify(this.props)}
+          {JSON.stringify(this.props.data)}
         </div>
       </>
     );

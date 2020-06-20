@@ -9,8 +9,6 @@ class Components extends Component<unknown> {
 
   constructor(props: unknown) {
     super(props);
-    // const a: string = JSON.stringify({ a: 'a' }) + 'a';
-    // const b = JSON.parse(a);
   }
 
   AsyncComponent: any = null;
@@ -31,7 +29,7 @@ class Components extends Component<unknown> {
   }
 
   render() {
-    // throw new Error('1');
+    throw new Error('q');
     const result = this.AsyncComponent ? (
       <>
         <Suspense fallback={<div>Загрузка...</div>}>

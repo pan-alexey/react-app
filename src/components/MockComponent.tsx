@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-// import { hot } from 'react-hot-loader/root';
 import styles from '~src/sass/mock.module.scss';
 
 class Components extends Component {
@@ -19,10 +18,6 @@ class Components extends Component {
     );
   }
 }
-
-// Hot becouse Components is lazy
-// export default hot(Components);
-// export default Components;
 
 export default connect(
   (state) => ({

@@ -1,16 +1,4 @@
 /* eslint-disable react/prop-types */
-// Base widget:
-// Error Capturing
-// Rendering stats
-
-/*
-В случае сервера, виджет рендерится в статичную html разметку, но нужен оверхед
-1. подключения стора в виджете и прокидывания его в компонент
-2. пытаемся отрисовать разметку. Если все ок, то в виджете рендерим html
-
-*/
-
-// для сервера https://github.com/zekchan/react-ssr-error-boundary/blob/master/src/server.js
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { createStore } from 'redux';
@@ -27,8 +15,12 @@ const components: { [key: string]: React.ElementType } = {
 
 export interface IWidget {
   componentName: string;
-  store?: any;
+  store?: any; // this redux store
 }
+
+const ErrorElelment = () => {
+  return <div>Что-то пошло не так.</div>;
+};
 
 const isServer = typeof window === 'undefined';
 
@@ -40,14 +32,9 @@ class ErrorBoundary extends React.Component {
     return { hasError: true };
   }
 
-  componentDidCatch() {
-    // Customized error handling goes here!
-  }
-
   render() {
     if (this.state.hasError) {
-      // Можно отрендерить запасной UI произвольного вида
-      return <h1>Что-то пошло не так.</h1>;
+      return <ErrorElelment />;
     }
 
     return this.props.children;
@@ -83,8 +70,11 @@ class Widget extends React.Component<IWidget> {
 
       return <div className="widget" dangerouslySetInnerHTML={{ __html }} />;
     } catch (err) {
-      console.log(err);
-      return <div className="widget"></div>;
+      return (
+        <div className="widget">
+          <ErrorElelment />
+        </div>
+      );
     }
   }
 }
