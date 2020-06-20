@@ -15,12 +15,17 @@ const render = (request: Request, response?: Response) => {
     color: 'yellow',
   });
 
+  const data = {
+    date: new Date().toUTCString(),
+  };
+
   return new Promise<string>((resolve) => {
-    const state = `<script>window.__INITIAL_DATA__ = ${JSON.stringify(store.getState())};</script>`;
+    let state = `<script>window.__DATA__ = ${JSON.stringify(data)};</script>`;
+    state += `<script>window.__STORE__ = ${JSON.stringify(store.getState())};</script>`;
     let renderResult = '';
     const app = (
       <Provider store={store} key="provider">
-        <App />
+        <App data={data} />
       </Provider>
     );
 

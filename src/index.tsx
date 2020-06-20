@@ -1,6 +1,6 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
-import { createStore, applyMiddleware } from 'redux';
+import { createStore } from 'redux';
 import { hot } from 'react-hot-loader/root';
 
 import ReactDOM from 'react-dom';
@@ -16,13 +16,15 @@ const HotApp = hot(App);
 
 if (rootElement) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const __PRELOADED_STATE__ = (window as any).__INITIAL_DATA__;
-  const store = createStore(reducer, __PRELOADED_STATE__);
+  const __STORE__ = (window as any).__STORE__ || {};
+  const __DATA__ = (window as any).__DATA__ || {};
+
+  const store = createStore(reducer, __STORE__);
 
   const reactDomHandler = rootElement.childNodes.length ? ReactDOM.hydrate : ReactDOM.render;
   reactDomHandler(
     <Provider store={store}>
-      <HotApp />
+      <HotApp data={__DATA__} />
     </Provider>,
     rootElement,
   );

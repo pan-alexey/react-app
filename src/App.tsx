@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { Component } from 'react';
 import BaseWidget from '~src/core/BaseWidget';
 
-class App extends Component<unknown> {
+class App extends Component<any> {
   state = {
     count: 0,
   };
@@ -15,8 +16,10 @@ class App extends Component<unknown> {
     afterRender: 0,
   };
 
-  constructor(prop: unknown) {
+  constructor(prop: any) {
     super(prop);
+    console.log(prop);
+
     this.benchmark['start'] = Date.now();
   }
 
@@ -47,6 +50,7 @@ class App extends Component<unknown> {
         <>
           {/* {BaseWidget('MockComponent')}
           {BaseWidget('Component')} */}
+          {JSON.stringify(this.props)}
           <h1>Пример react</h1>
           <p>{this.state.count}</p>
           <button onClick={this.increment}>Increment</button>

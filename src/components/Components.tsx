@@ -34,7 +34,6 @@ class Components extends Component<unknown> {
     // throw new Error('1');
     const result = this.AsyncComponent ? (
       <>
-        {this.props}
         <Suspense fallback={<div>Загрузка...</div>}>
           <this.AsyncComponent />
         </Suspense>
