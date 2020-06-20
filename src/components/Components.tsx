@@ -29,7 +29,7 @@ class Components extends Component<unknown> {
   }
 
   render() {
-    throw new Error('q');
+    // throw new Error('q');
     const result = this.AsyncComponent ? (
       <>
         <Suspense fallback={<div>Загрузка...</div>}>

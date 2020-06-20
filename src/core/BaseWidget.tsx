@@ -5,11 +5,11 @@ import { createStore } from 'redux';
 import { Provider, connect } from 'react-redux';
 
 import reducer from '~src/store';
-import MockComponent from '~src/components/MockComponent';
+// import MockComponent from '~src/components/MockComponent';
 import Components from '~src/components/Components';
 
 const components: { [key: string]: React.ElementType } = {
-  MockComponent,
+  MockComponent: require('~src/components/MockComponent').default,
   Components,
 };
 
