@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { createStore } from 'redux';
@@ -8,37 +7,18 @@ import reducer from '~src/store';
 // import MockComponent from '~src/components/MockComponent';
 import Components from '~src/components/Components';
 
+import { ErrorBoundary, ErrorElelment } from './ErrorBoundary';
+
+const isServer = typeof window === 'undefined';
+
 const components: { [key: string]: React.ElementType } = {
-  MockComponent: require('~src/components/MockComponent').default,
+  // MockComponent: require('~src/components/MockComponent').default,
   Components,
 };
 
 export interface IWidget {
   componentName: string;
   store?: any; // this redux store
-}
-
-const ErrorElelment = () => {
-  return <div>Что-то пошло не так.</div>;
-};
-
-const isServer = typeof window === 'undefined';
-
-class ErrorBoundary extends React.Component {
-  state = { hasError: false };
-
-  static getDerivedStateFromError() {
-    // Обновить состояние с тем, чтобы следующий рендер показал запасной UI.
-    return { hasError: true };
-  }
-
-  render() {
-    if (this.state.hasError) {
-      return <ErrorElelment />;
-    }
-
-    return this.props.children;
-  }
 }
 
 class Widget extends React.Component<IWidget> {
@@ -79,6 +59,10 @@ class Widget extends React.Component<IWidget> {
   }
 }
 
-export default connect((state) => ({
-  store: state,
-}))(Widget);
+const WidgetEntry = isServer
+  ? connect((state) => ({
+      store: state,
+    }))(Widget)
+  : Widget;
+
+export default WidgetEntry;

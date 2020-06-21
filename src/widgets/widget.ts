@@ -1,10 +1,12 @@
 export const widgets: {
   [key: string]: {
     component: string;
+    lazy: boolean;
   };
 } = {
   header: {
     component: './Header',
+    lazy: true,
   },
 };
 

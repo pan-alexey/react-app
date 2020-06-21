@@ -1,45 +1,17 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-useless-constructor */
 /* eslint-disable react/prop-types */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import React, { Component, Suspense } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-class Components extends Component<unknown> {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-
-  constructor(props: unknown) {
+class Components extends Component<any> {
+  constructor(props: any) {
     super(props);
   }
 
-  AsyncComponent: any = null;
-  benchmark: {
-    start?: number;
-    didMount?: number;
-    afterRender?: number;
-  } = {};
-
-  state = {
-    canRender: false,
-  };
-
-  componentDidMount() {
-    this.AsyncComponent = React.lazy(() => import('./MockComponent'));
-    this.setState((state) => state);
-    this.benchmark['didMount'] = Date.now();
-  }
-
   render() {
-    // throw new Error('q');
-    const result = this.AsyncComponent ? (
-      <>
-        <Suspense fallback={<div>Загрузка...</div>}>
-          <this.AsyncComponent />
-        </Suspense>
-      </>
-    ) : null;
-
-    this.benchmark['afterRender'] = Date.now();
-    return result;
+    return <div>Components</div>;
   }
 }
 
