@@ -1,5 +1,5 @@
 const isServer = (): boolean => {
-  return typeof process !== 'undefined' && process.release.name === 'node';
+  return typeof module !== 'undefined' && module.exports && typeof window === 'undefined';
 };
 
 export default isServer;
