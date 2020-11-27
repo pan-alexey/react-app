@@ -8,6 +8,7 @@ class App extends Component<{ data: any }> {
         <h1>React</h1>
         <div>
           BaseWidget (Components)
+          <BaseWidget componentName={'Counter'} />
           <BaseWidget componentName={'Components'} />
           <BaseWidget componentName={'MockComponent'} />
         </div>

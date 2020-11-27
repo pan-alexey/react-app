@@ -1,11 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-useless-constructor */
-/* eslint-disable react/prop-types */
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 class Components extends Component<any> {
+  // eslint-disable-next-line @typescript-eslint/no-useless-constructor
   constructor(props: any) {
     super(props);
   }

@@ -10,6 +10,7 @@ const isProduction = process.env.NODE_ENV === 'production';
 const webpackConfig = {
   mode: isProduction ? 'production' : 'development',
   entry: [paths.resolve('./src/index.tsx')],
+  devtool: 'source-map',
   resolve: {
     alias: {
       'react-dom': '@hot-loader/react-dom', // patch for real react hot module

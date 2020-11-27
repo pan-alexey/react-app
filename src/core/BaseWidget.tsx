@@ -12,12 +12,14 @@ import { ErrorBoundary, ErrorElelment } from './ErrorBoundary';
 const isServer = typeof window === 'undefined';
 
 const components: { [key: string]: React.ElementType } = {
-  // MockComponent: require('~src/components/MockComponent').default,
+  MockComponent: require('~src/components/MockComponent').default,
+  Counter: require('~src/components/Counter').default,
   Components,
 };
 
 export interface IWidget {
   componentName: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   store?: any; // this redux store
 }
 

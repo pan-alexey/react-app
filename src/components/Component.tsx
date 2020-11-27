@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/no-useless-constructor */
-/* eslint-disable react/prop-types */
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import React, { Component, Suspense } from 'react';
 import { connect } from 'react-redux';
 

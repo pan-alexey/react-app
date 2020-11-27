@@ -1,7 +1,7 @@
 # REACT EXAMPLE
 
 ### Implemented
-* React Server Side Rendering
+* React Server Side Rendering + Redux
 * Hot module replacement
 * Typescript
 * ESLint + Pretier
