@@ -10,6 +10,7 @@ const isProduction = process.env.NODE_ENV === 'production';
 const webpackConfig = {
   mode: isProduction ? 'production' : 'development',
   entry: [paths.resolve('./src/index.tsx')],
+  devtool: 'inline-source-map',
   resolve: {
     alias: {
       'react-dom': '@hot-loader/react-dom',
@@ -22,6 +23,7 @@ const webpackConfig = {
     path: paths.dist,
     filename: 'index.js',
     chunkFilename: 'js/[name].[contenthash:8].js',
+    // sourceMapFilename: "[name].js.map"
   },
   plugins: [
     new MiniCssExtractPlugin({
