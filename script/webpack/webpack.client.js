@@ -10,10 +10,11 @@ const isProduction = process.env.NODE_ENV === 'production';
 const webpackConfig = {
   mode: isProduction ? 'production' : 'development',
   entry: [paths.resolve('./src/index.tsx')],
-  devtool: 'inline-source-map',
+  devtool: 'source-map',
   resolve: {
     alias: {
-      'react-dom': '@hot-loader/react-dom',
+      'react-dom': '@hot-loader/react-dom', // patch for real react hot module
+      '~': paths.root,
       '~src': paths.src,
       '~server': paths.server,
     },
@@ -23,12 +24,15 @@ const webpackConfig = {
     path: paths.dist,
     filename: 'index.js',
     chunkFilename: 'js/[name].[contenthash:8].js',
-    // sourceMapFilename: "[name].js.map"
+    // publicPath: 'https://react.vxv.me/', for cdn chucnk
   },
   plugins: [
+    new webpack.optimize.LimitChunkCountPlugin({
+      maxChunks: 40,
+    }),
     new MiniCssExtractPlugin({
-      filename: '[name].css',
-      chunkFilename: '[id].css',
+      filename: 'main.css',
+      chunkFilename: 'css/[name].[contenthash:8].css',
     }),
   ],
   module: {

@@ -1,43 +1,21 @@
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { Component } from 'react';
-import MockComponent from './MockComponent';
-import styles from '~src/sass/main.module.scss';
-//import { createStore } from 'redux';
+import { connect } from 'react-redux';
 
-class Components extends Component {
-  state = {
-    count: 0,
-  };
-
-  increment = () => {
-    this.setState({
-      count: this.state.count + 1,
-    });
-  };
-
-  decrement = () => {
-    this.setState({
-      count: this.state.count - 1,
-    });
-  };
-
-  handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({
-      count: parseInt(event.target.value),
-    });
-  };
+class Components extends Component<any> {
+  // eslint-disable-next-line @typescript-eslint/no-useless-constructor
+  constructor(props: any) {
+    super(props);
+  }
 
   render() {
-    return (
-      <div className={styles.app}>
-        <h1>{this.state.count}</h1>
-        <button onClick={this.increment}>Increment</button>
-        <button onClick={this.decrement}>Decrement</button>
-        <input value={this.state.count} onChange={this.handleChange}></input>
-        <MockComponent />
-      </div>
-    );
+    return <div>Components</div>;
   }
 }
 
-export default Components;
+export default connect(
+  (state) => ({
+    reduxStore: state,
+  }),
+  (dispatch) => ({}),
+)(Components);

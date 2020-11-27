@@ -8,8 +8,10 @@ const resolve = (relativePath) => path.resolve(rootPath, relativePath);
 
 module.exports = {
   resolve,
+  root: resolve('./src'),
   src: resolve('./src'),
   server: resolve('./server'),
   build: resolve('./build'),
-  dist: resolve('./dist'),
+  dist: resolve('./build/dist'),
+  public: resolve('./public'),
 };

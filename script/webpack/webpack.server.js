@@ -6,17 +6,20 @@ const nodeExternals = require('webpack-node-externals');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const cssLoader = require('./helpers/cssLoader');
 
+const isProduction = process.env.NODE_ENV === 'production';
+
 const webpackConfig = {
-  mode: 'development',
+  mode: isProduction ? 'production' : 'development',
   target: 'node',
   externals: [nodeExternals()],
   entry: [paths.resolve('./server/app.tsx')],
   resolve: {
     alias: {
+      '~': paths.root,
       '~src': paths.src,
       '~server': paths.server,
     },
-    extensions: ['.scss', '.js', 'jsx', '.ts', '.tsx'],
+    extensions: ['.scss', '.js', 'jsx', '.ts', '.tsx', 'ejs'],
   },
   output: {
     libraryTarget: 'umd',
@@ -24,9 +27,12 @@ const webpackConfig = {
     filename: 'server.js',
   },
   plugins: [
+    new webpack.optimize.LimitChunkCountPlugin({
+      maxChunks: 1,
+    }),
     new MiniCssExtractPlugin({
-      filename: '[name].css',
-      chunkFilename: '[id].css',
+      filename: 'main.css',
+      chunkFilename: 'css/[name].[contenthash:8].css',
     }),
   ],
   optimization: {
@@ -50,12 +56,15 @@ const webpackConfig = {
         use: [cssLoader(true), 'sass-loader'],
       },
       {
-        test: /\.(ttf|eot|otf|svg|png)$/,
-        loader: 'file-loader',
-      },
-      {
-        test: /\.(woff|woff2)$/,
-        loader: 'url-loader',
+        test: /\.ejs$/i,
+        use: [
+          {
+            loader: 'raw-loader',
+            options: {
+              esModule: false,
+            },
+          },
+        ],
       },
     ],
   },

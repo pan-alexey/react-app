@@ -1,8 +1,8 @@
 'use strict';
+process.env.NODE_ENV = 'development';
 
 const path = require('path');
 const WebpackDevServer = require('webpack-dev-server');
-const webpack = require('webpack');
 const paths = require('./utils/paths');
 const requireUncached = require('./utils/requireUncached');
 
@@ -48,12 +48,19 @@ webpackCompliller['client'] = webpackClinet();
     historyApiFallback: true,
     noInfo: true,
     stats: 'none',
+    contentBase: 'public',
+    contentBasePublicPath: '/public',
     onListening: function (server) {
       WebpackHooks.regiserPort(server.listeningApp.address().port);
     },
-    after: (app) => {
-      app.use((req, res, next) => {
-        serverMiddleware(req, res, next);
+    after: (app, server) => {
+      app.use(async (req, res, next) => {
+        try {
+          serverMiddleware(req, res, next);
+        } catch (error) {
+          console.log('server error');
+          console.log(error);
+        }
       });
     },
   }).listen(DEFAULT_PORT, HOST, (err) => {

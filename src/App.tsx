@@ -1,16 +1,24 @@
-import { hot } from 'react-hot-loader/root';
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { Component } from 'react';
-import Components from '~src/components/Components';
-
-class App extends Component {
+import BaseWidget from './core/BaseWidget';
+class App extends Component<{ data: any }> {
   render() {
     return (
-      <div>
-        React
-        <Components />
-      </div>
+      <>
+        <h1>React</h1>
+        <div>
+          BaseWidget (Components)
+          <BaseWidget componentName={'Counter'} />
+          <BaseWidget componentName={'Components'} />
+          <BaseWidget componentName={'MockComponent'} />
+        </div>
+        <div>
+          PROPS
+          {JSON.stringify(this.props.data)}
+        </div>
+      </>
     );
   }
 }
 
-export default hot(App);
+export default App;
